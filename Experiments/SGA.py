@@ -17,6 +17,7 @@ import kfac
 
 import matplotlib.pyplot as plt
 import scipy as sp
+from scipy.stats import gaussian_kde
 
 #@title Defining the SGA Optimiser
 
@@ -164,7 +165,7 @@ def reset_and_build_graph(
 
 def kde(mu, tau, bbox=None, xlabel="", ylabel="", cmap='Blues'):
     values = np.vstack([mu, tau])
-    kernel = sp.stats.gaussian_kde(values)
+    kernel = gaussian_kde(values)
 
     fig, ax = plt.subplots()
     ax.axis(bbox)
@@ -176,6 +177,8 @@ def kde(mu, tau, bbox=None, xlabel="", ylabel="", cmap='Blues'):
     positions = np.vstack([xx.ravel(), yy.ravel()])
     f = np.reshape(kernel(positions).T, xx.shape)
     cfset = ax.contourf(xx, yy, f, cmap=cmap)
+    # 将生成的图片保存
+    plt.savefig("SGA_figure.png")
     plt.show()
 
 
