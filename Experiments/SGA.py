@@ -178,8 +178,8 @@ def kde(mu, tau, bbox=None, xlabel="", ylabel="", cmap='Blues'):
     f = np.reshape(kernel(positions).T, xx.shape)
     cfset = ax.contourf(xx, yy, f, cmap=cmap)
     # 将生成的图片保存
-    plt.savefig("SGA_figure.png")
-    plt.show()
+    # plt.savefig("SGA_figure.png")
+    # plt.show()
 
 
 def train(train_op, x_fake, z, init, disc_loss, gen_loss, z_dim,
@@ -199,7 +199,9 @@ def train(train_op, x_fake, z, init, disc_loss, gen_loss, z_dim,
                       (i, disc_loss_out, gen_loss_out))
                 x_out = np.concatenate(
                     [sess.run(x_fake, feed_dict={z: zt}) for zt in ztest], axis=0)
+                plt.figure()
                 kde(x_out[:, 0], x_out[:, 1], bbox=bbox)
+                plt.savefig("SGA_figure.png")
     
 def learn_mixture_of_gaussians(mode):
     print(mode)
